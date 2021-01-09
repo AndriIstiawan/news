@@ -9,7 +9,6 @@ const checkuser = require('../../_helpers/checkUserRequest').checkUserRequest,
 
 // CREATE an VR Content
 exports.create = async (req, res) => {
-    console.log(req.body)
     const { error, value } = newsValidation(req.body);
     if (error) {
         return res.status(400).send(error.details[0].message)
