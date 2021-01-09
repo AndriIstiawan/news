@@ -1,0 +1,22 @@
+node_modules/
+asset/
+package-lock.json
+userdata/
+.env
+prod.env
+staging.env
+dev.env
+.env*
+.env.cloud
+.env.local
+temp/
+
+#sonarqube
+.scannerwork/
+
+# various data dir
+data/
+updatefile.js
+.vs
+.nyc_output/
+coverage/
