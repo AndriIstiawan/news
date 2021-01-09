@@ -53,6 +53,8 @@
 
 	* password
 
+	*default user ( username: author, pass: author)*
+
 	Return object berisi:
 
 	`{

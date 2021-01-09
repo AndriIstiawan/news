@@ -44,6 +44,7 @@
     "passport-local-mongoose": "^5.0.1",
     "path": "^0.12.7",
     "randombytes": "^2.1.0",
+    "request": "^2.88.2",
     "util": "^0.12.3"
   },
   "devDependencies": {}
