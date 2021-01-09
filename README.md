@@ -1,33 +1,28 @@
 
-# SmartEye VR/AR Viewer App
+# Kompas Artikel API
 
 ## Prerequisites
-1. Install Node.js latest
+1. Clone this repository:
 
-2. Install Mongodb latest
-
-3. Clone this repository:
-
-		https://gitlab.playcourt.id/amoeba/smarteye/platform-smarteye/platform-backend.git
+		https://github.com/AndriIstiawan/news.git
 		
 
 ## How to build
-1. Change directory to one of the sample folders, e.g. platform-backend:
+1. Change directory to one of the sample folders, e.g. news:
 
-		cd platform-backend/
+		cd news/
 
-2. Install the sample's dependencies (see the sample's README for details):
-
-		npm install
-
-3. Configure the environment variables in the `.env` file
+2. Configure the environment variables in the `.env` file
 
 		cp example.env .env
 
-4. Run the sample:
+3. if you run nginx in os, please stop before run the docker-compose
 
-		node app-platform.js
+4. Run the docker-compose:
 
+		docker-compose up -d --build
+
+5. run in browser http://0.0.0.0
   
 
 ## API Usage
@@ -35,11 +30,11 @@
 
 ### Register & Login
 
-1. CREATE (melakukan registrasi) user baru
+1. CREATE register user
 
 	`POST` request ke `http://<server_ip>/api/v1/auth/register`
 
-	dengan form berisi:
+	form:
 
 	* username
 
@@ -47,13 +42,12 @@
 
 	* email
 
-  
 
 2. LOGIN
 
 	`POST` request ke `http://<server_ip>/api/v1/auth/login`
 
-	dengan form berisi:
+	form:
 
 	* username
 
@@ -71,81 +65,55 @@
 
   
 
-### VR Content Management
+### News Management
 
-1. CREATE konten VR baru dan mendaftarkannya ke database
+1. CREATE news 
 
-	`POST` request ke `http://<server_ip>/codingcamp/api/v1/vrcontents`
+	`POST` request ke `http://<server_ip>/api/v1/news`
 
-	dengan form berisi:
-
-	* title
-
-	* category
-
-	* description
-
-	* owner (*harus sesuai dengan salah satu username yg sudah ada*)
-
-	* projectDir (dengan format `http://<server_ip>/asset/projects/<username>/vr/<slug_title>`)
-
-	* thumbnail (diisi dengan `thumbnail.jpg`)
-
-	* scenarioName (diisi dengan `vrdata.json`)
-
-	Catatan: `slug_title` adalah title yang di convert jadi lowercase, dan spasi nya diubah jadi '-'
-
-  
-
-2. LIST semua konten VR
-
-	`GET` request ke `http://<server_ip>/codingcamp/api/v1/vrcontents`
-
-  
-
-### AR Content Management
-
-1. CREATE konten AR baru dan mendaftarkannya ke database
-
-	`POST` request ke `http://<server_ip>/codingcamp/api/v1/arcontents`
-
-	dengan form berisi:
+	form:
 
 	* title
 
-	* category
+	* body
 
-	* description
+	* status (*must match one of the existing*)
 
-	* owner (*harus sesuai dengan salah satu username yg sudah ada*)
+2. Update news 
 
-	* projectDir (dengan format `http://<server_ip>/asset/projects/<username>/ar/<slug_title>`)
+	`PUT` request ke `http://<server_ip>/api/v1/news/{newsId} ` ( *ex newsId : 918293847591829384951293*) 
 
-	* thumbnail (diisi dengan `thumbnail.jpg`)
+	form:
 
-	* objectName (diisi dengan `bundle`)
+	* title
 
-	Catatan: `slug_title` adalah title yang di convert jadi lowercase, dan spasi nya diubah jadi '-'
+	* body
 
-  
+	* status (*must match one of the existing*)
 
-2. LIST semua konten AR
+3. Delete news 
 
-	`GET` request ke `http://<server_ip>/codingcamp/api/v1/arcontents`
+	`DELETE` request ke `http://<server_ip>/api/v1/news/{newsId} ` ( *ex newsId : 918293847591829384951293*)   
 
-  
+4. LIST All news
 
-# Testing Code
+	`GET` request ke `http://<server_ip>/api/v1/news`
 
-1. lakukan perintah untuk menjalankan test
-  
+5. LIST news by Author
 
-## Run all test
+	`GET` request ke `http://<server_ip>/api/v1/news/me`
 
-1. npm run unit-test
+6. Get One news
 
-	perintah ini di jalankan untuk melakukan run unit-test.
+	`GET` request ke `http://<server_ip>/api/v1/news/{newsId} ` ( *ex newsId : 918293847591829384951293*) 
+	
 
+### Status Management
+
+1. LIST All status
+
+	`GET` request ke `http://<server_ip>/api/v1/status`
+	
 
 ## Contributing
 
@@ -173,7 +141,6 @@ TODO: Write history
 
 ## Author
 
-* Fahmi 
 * Andri
   
 

@@ -7,14 +7,15 @@ const bodyParser = require('body-parser'),
 // Config File
 const CONFIG = require('./config/config');
 
-const apiArContentRoute = require('./components/arcontents/arcontentsRouteAPI'),
-    apiUserAuthRoute = require('./components/auth/authRouteAPI'),
+//seed
+const { seedAuth, seedStatus } = require('./_helpers/seeder');
+
+const apiUserAuthRoute = require('./components/auth/authRouteAPI'),
     apiStatusRoute = require('./components/status/statusRouteAPI'),
     apiNewsRoute = require('./components/news/newsRouteAPI'),
     apiSecretRoute = require('./components/users/usersRouteAPI');
 
 const dbConnBuilder = require('./_helpers/db_conn_builder');
-const dbTestingConnBuilder = require('./_helpers/db_testing_conn_builder');
 const app = express();
 
 // App setup
@@ -75,25 +76,24 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 
 mongoose.Promise = global.Promise;
 // DB Setup
-if (process.env.NODE_ENV === 'test') {
-    dbTestingConnBuilder()
-} else {
-    const dbConnUri = dbConnBuilder(CONFIG);
-    console.log('Connection URI:', dbConnUri);
-    mongoose.connect(dbConnUri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
-    mongoose.connection.on('error', error => console.log(error));
-}
+const dbConnUri = dbConnBuilder(CONFIG);
+console.log('Connection URI:', dbConnUri);
+mongoose.connect(dbConnUri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+mongoose.connection.on('error', error => console.log(error));
 
 // Main App Route
 app.get('/', function (req, res) {
     res.json({ message: "This is the api server main route", status: "OK" });
 });
 // API Routes
-app.use('/api/v1/', apiArContentRoute);
 app.use('/api/v1/', apiNewsRoute);
 app.use('/api/v1/', apiStatusRoute);
 app.use('/api/v1/auth/', apiUserAuthRoute);
 app.use('/api/v1/user/', passport.authenticate('jwt', { session: false }), apiSecretRoute);
+
+//run seeder
+seedAuth()
+seedStatus()
 
 app.listen(process.env.PORT || 4000, function () {
     console.log('Application is running.. ');
