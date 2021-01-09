@@ -1,5 +1,5 @@
 
-# Kompas Artikel API
+# Kompas News API
 
 ## Prerequisites
 1. Clone this repository:
@@ -113,7 +113,7 @@
 1. LIST All status
 
 	`GET` request ke `http://<server_ip>/api/v1/status`
-	
+
 
 ## Contributing
 
